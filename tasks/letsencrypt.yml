@@ -10,11 +10,20 @@
     - lesencrypt
     - nginxrevproxy
 
+- name: Install certbot from pip
+  pip:
+    name: "{{ nginx_revproxy_certbot_packages_pip }}"
+    state: present
+  when: nginx_revproxy_certbot_from_pip
+  tags:
+    - lesencrypt
+    - nginxrevproxy
+
 - name: Install certbot from repository
   apt:
     name: "{{ nginx_revproxy_certbot_packages }}"
     state: present
-  when: not nginx_revproxy_certbot_auto
+  when: not nginx_revproxy_certbot_auto and not nginx_revproxy_certbot_from_pip
   tags:
     - lesencrypt
     - nginxrevproxy

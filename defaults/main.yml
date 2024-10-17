@@ -31,3 +31,9 @@ nginx_revproxy_de_activate_sites: true
 nginx_revproxy_certbot_packages:
   - certbot
   - python3-certbot-nginx
+
+nginx_revproxy_certbot_from_pip: false
+
+nginx_revproxy_certbot_packages_pip:
+  - certbot
+  - certbot-nginx
