@@ -81,13 +81,13 @@
         - site_enabled is success
 
 - name: Generate certs (first time)
-  ansible.builtin.command: 
+  ansible.builtin.command:
     cmd: certbot{{ '-auto' if nginx_revproxy_certbot_auto else '' }} certonly
       --webroot -w /var/www/{{ item.key }}
       -d {{ item.value.domains | join(' -d ') }}
-      --email {{ item.value.letsencrypt_email }}
+      --email {{ item.value.letsencrypt_email | default(letsencrypt_email) }}
       --non-interactive --cert-name {{ item.key }}
-      --agree-tos 
+      --agree-tos
     creates: /etc/letsencrypt/live/{{ item.key }}/fullchain.pem
   with_dict: "{{ nginx_revproxy_sites }}"
   when: item.value.letsencrypt | default(False)
