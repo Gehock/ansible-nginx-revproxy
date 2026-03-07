@@ -88,6 +88,7 @@
       --email {{ item.value.letsencrypt_email | default(letsencrypt_email) }}
       --non-interactive --cert-name {{ item.key }}
       --agree-tos
+      {{ ( '--server ' ~ ( item.letsencrypt_server | default(letsencrypt_server) )) if item.letsencrypt_server is defined or letsencrypt_server else '' }}
     creates: /etc/letsencrypt/live/{{ item.key }}/fullchain.pem
   with_dict: "{{ nginx_revproxy_sites }}"
   when: item.value.letsencrypt | default(False)
